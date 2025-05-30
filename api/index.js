@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const pool = require('./db');
+const pool = require('../db');
 require('dotenv').config();
+
+const serverless = require('serverless-http');
 
 const app = express();
 app.use(cors());
@@ -91,8 +93,4 @@ app.delete('/pessoas/:id', async (req, res) => {
   }
 });
 
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+module.exports.handler = serverless(app);
